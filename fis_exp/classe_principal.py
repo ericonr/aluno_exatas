@@ -148,6 +148,9 @@ class FisExp:
 	def __str__ (self):
 		return str(self.__funcao)
 
+	def __repr__ (self):
+		return ('FisExp(\'' + str(self) + '\', ' + str(self.__valores_conhecidos) + ', ' + str(self.__incertezas_conhecidas) + ')')
+
 '''def gerarSimbolos (lista, dict):
 	exec ('import sympy as sp')
 	for simbolo in lista.split():
@@ -170,3 +173,5 @@ if __name__ is "__main__":
 	f_a.valores_conhecidos = variaveis
 	print("Teste de substituicao 2: ", f_a.funcao_substituida)
 	print ('Propagacao substituida: ', f_a.propagacao_substituida)
+	print ('Integral em x: ', f_a.integrar('x'))
+	print ('Derivada em x: ', f_a.derivar('x'))
