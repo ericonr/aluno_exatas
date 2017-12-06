@@ -19,20 +19,19 @@ class FisExp:
 			self.__incertezas[simbolo] = incerteza
 
 		self.__funcao_substituida = self.__funcao
-
 		self.__valores_conhecidos = dict()
 		self.valores_conhecidos = valores_conhecidos
 
-		self.__incertezas_conhecidas = dict()
 		self._propagacao()
+		self.__incertezas_conhecidas = dict()
 		self.incertezas_conhecidas = incertezas_conhecidas
 
 	@property
 	def funcao (self):
 		return self.__funcao
 	@funcao.setter
-	def funcao (self, a):
-		pass
+	def funcao (self, nova_funcao):
+		self.__init__(nova_funcao)
 
 	@property
 	def variaveis (self):
@@ -82,13 +81,14 @@ class FisExp:
 		conhecidos para algumas variáveis.
 		É chamado por self.incertezas_conhecidas = dict com valores
 		'''
-		for inc in incertezas_conhecidas.keys():
-			self.__incertezas_conhecidas[inc] = incertezas_conhecidas[inc]
+		#for inc in incertezas_conhecidas.keys():
+		#	self.__incertezas_conhecidas[inc] = incertezas_conhecidas[inc]
+		self.__incertezas_conhecidas = incertezas_conhecidas
 
 		incertezas_chaves_corretas = dict()
 		for chave_variavel in self.__variaveis:
-			if chave_variavel in self.__incertezas_conhecidas.keys():
-				incertezas_chaves_corretas[self.__incertezas[chave_variavel]] = self.__incertezas_conhecidas[chave_variavel]
+			if str(chave_variavel) in self.__incertezas_conhecidas.keys():
+				incertezas_chaves_corretas[str(self.__incertezas[chave_variavel])] = self.__incertezas_conhecidas[str(chave_variavel)]
 
 		propagacao_substituida = self.__propagacao.subs(incertezas_chaves_corretas)
 		propagacao_substituida = propagacao_substituida.subs(self.__valores_conhecidos)
@@ -121,7 +121,7 @@ class FisExp:
 		if limites is None:
 			return self.__funcao.integrate(self._ultimo_simbolo)
 		else:
-			return self.__funcao.integrate((simboloelf._ultimo_simbolo, limites[0], limites[1]))
+			return self.__funcao.integrate((self._ultimo_simbolo, limites[0], limites[1]))
 
 	def derivar (self, var, ponto_avaliado=None, indice=1):
 		'''Permite derivar facilmente a função na variável "var" (que deve vir como string), e
@@ -159,10 +159,10 @@ if __name__ is "__main__":
 	f_a = FisExp(f)
 	print ("Funcao: ", str(f_a))
 	print ("Propagacao: ", f_a.propagacao)
-	variaveis = {'a':4}
-	incertezas = {'a':1}
+	variaveis = {'a':4, 'b':3}
+	asd = {'a':1, 'b':3}
 	f_a.valores_conhecidos = variaveis
-	f_a.incertezas_conhecidas = incertezas
+	f_a.incertezas_conhecidas = asd
 	print ("Substituicao: ", f_a.funcao_substituida)
 	f_a.funcao_substituida = 'bla'
 	print("Teste de substituicao: ", f_a.funcao_substituida)
