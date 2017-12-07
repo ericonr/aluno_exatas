@@ -1,1 +1,0 @@
-from fis_exp.classe_principal import *

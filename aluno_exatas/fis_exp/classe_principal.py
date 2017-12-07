@@ -6,7 +6,9 @@ import sympy as sp
 class FisExp:
 
 	def __init__ (self, funcao, valores_conhecidos=dict(), incertezas_conhecidas=dict()):
-		
+		'''Inicializacao da funcao, em que configura a funcao principal, armazena os dicionarios e
+		configura valores.
+		'''
 		if type(funcao) is str:
 			self.__funcao = sp.sympify(funcao)
 		else:
@@ -56,8 +58,9 @@ class FisExp:
 		É chamado por self.valores_conhecidos = dict com valores
 		Para apagar os valores substituídos, é necessário usar self.valores_conhecidos = {}
 		'''
-		for var in valores_conhecidos.keys():
-			self.__valores_conhecidos[var] = valores_conhecidos[var]
+		#for var in valores_conhecidos.keys():
+		#	self.__valores_conhecidos[var] = valores_conhecidos[var]
+		self.__valores_conhecidos = valores_conhecidos
 
 		if not valores_conhecidos:
 			self.__valores_conhecidos = dict()
@@ -93,13 +96,20 @@ class FisExp:
 		propagacao_substituida = self.__propagacao.subs(incertezas_chaves_corretas)
 		propagacao_substituida = propagacao_substituida.subs(self.__valores_conhecidos)
 
-		self.propagacao_substituida = propagacao_substituida
+		self.__propagacao_substituida = propagacao_substituida
 
 	@property
 	def propagacao (self):
 		return self.__propagacao
 	@propagacao.setter
 	def propagacao (self, a):
+		pass
+
+	@property
+	def propagacao_substituida (self):
+		return self.__propagacao_substituida
+	@propagacao_substituida.setter
+	def propagacao_substituida (self, a):
 		pass
 
 	def _propagacao (self):
@@ -112,6 +122,26 @@ class FisExp:
 			propagacao += self.derivar(str(var))**2*self.__incertezas[var]**2
 
 		self.__propagacao = sp.sqrt(propagacao)
+
+	def gerar_funcao (self, variaveis_mantidas):
+		'''Gera uma funcao que tem como argumentos as variaveis em variaveis_mantidas, e permite
+		avaliar a funcao principal nos pontos escolhidos.
+		'''
+		variaveis = list()
+		for var in variaveis_mantidas:
+			variaveis.append(self._gerar_simbolo(var))
+
+		self.funcao_gerada = sp.lambdify(variaveis, self.__funcao_substituida)
+
+	def gerar_propagacao (self, variaveis_mantidas):
+		'''Gera uma funcao que tem como argumentos as variaveis em variaveis_mantidas, e permite
+		avaliar a propagacao nos pontos escolhidos.
+		'''
+		variaveis = list()
+		for var in variaveis_mantidas:
+			variaveis.append(self._gerar_simbolo(var))
+
+		self.propagacao_gerada = sp.lambdify(variaveis, self.__propagacao_substituida)
 
 	def integrar (self, var, limites=None):
 		'''Permite integrar facilmente a função na variável "var" (que deve vir como string), e
@@ -151,27 +181,27 @@ class FisExp:
 	def __repr__ (self):
 		return ('FisExp(\'' + str(self) + '\', ' + str(self.__valores_conhecidos) + ', ' + str(self.__incertezas_conhecidas) + ')')
 
-'''def gerarSimbolos (lista, dict):
-	exec ('import sympy as sp')
-	for simbolo in lista.split():
-		exec( simbolo + ' = ' + 'sp.symbols("' + simbolo + '")' )''' 
-#ideia a ser implementada
 
 if __name__ is "__main__":
 	f = sp.sympify('x*a+b+c')
 	f_a = FisExp(f)
 	print ("Funcao: ", str(f_a))
 	print ("Propagacao: ", f_a.propagacao)
-	variaveis = {'a':4, 'b':3}
-	asd = {'a':1, 'b':3}
+	variaveis = {'a':4, 'b':3, 'x':2}
+	asd = {'a':1, 'b':3, 'c':1, 'x':3}
 	f_a.valores_conhecidos = variaveis
 	f_a.incertezas_conhecidas = asd
 	print ("Substituicao: ", f_a.funcao_substituida)
 	f_a.funcao_substituida = 'bla'
 	print("Teste de substituicao: ", f_a.funcao_substituida)
-	variaveis = dict()
+	variaveis1 = dict()
+	f_a.valores_conhecidos = variaveis1
 	f_a.valores_conhecidos = variaveis
 	print("Teste de substituicao 2: ", f_a.funcao_substituida)
 	print ('Propagacao substituida: ', f_a.propagacao_substituida)
 	print ('Integral em x: ', f_a.integrar('x'))
 	print ('Derivada em x: ', f_a.derivar('x'))
+	f_a.gerar_funcao(['c'])
+	f_a.gerar_propagacao(['c'])
+	print ('Funcao gerada avaliada em c=5: ', f_a.funcao_gerada(5))
+	print ('Propagacao gerada avaliada em c=5: ', f_a.propagacao_gerada(5))
