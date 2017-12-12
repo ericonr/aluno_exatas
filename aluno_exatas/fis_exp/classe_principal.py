@@ -51,7 +51,7 @@ class FisExp:
 
 	@property
 	def valores_conhecidos (self):
-		return self.valores_conhecidos
+		return self.__valores_conhecidos
 	@valores_conhecidos.setter
 	def valores_conhecidos (self, valores_conhecidos):
 		'''Gera o atributo "funcao_substituida", que é a função com os valores conhecidos para algumas variáveis
@@ -143,17 +143,23 @@ class FisExp:
 
 		self.propagacao_gerada = sp.lambdify(variaveis, self.__propagacao_substituida)
 
-	def integrar (self, var, limites=None):
+	def integrar (self, var, limites=None, substituir=False):
 		'''Permite integrar facilmente a função na variável "var" (que deve vir como string), e
 		se o parâmetro "limites" for utilizado, retorna	a integral avaliada nesses pontos.
 		'''
 		self._gerar_simbolo(var)
 		if limites is None:
-			return self.__funcao.integrate(self._ultimo_simbolo)
+			if substituir:
+				return self.__funcao.integrate(self._ultimo_simbolo).subs(self.valores_conhecidos)
+			else:
+				return self.__funcao.integrate(self._ultimo_simbolo)
 		else:
-			return self.__funcao.integrate((self._ultimo_simbolo, limites[0], limites[1]))
+			if substituir:
+				return self.__funcao.integrate((self._ultimo_simbolo, limites[0], limites[1])).subs(self.valores_conhecidos)
+			else:
+				return self.__funcao.integrate((self._ultimo_simbolo, limites[0], limites[1]))
 
-	def derivar (self, var, ponto_avaliado=None, indice=1):
+	def derivar (self, var, ponto_avaliado=None, indice=1, substituir=False):
 		'''Permite derivar facilmente a função na variável "var" (que deve vir como string), e
 		se o parâmetro "ponto_avaliado" for configurado, avalia a função derivada naquele ponto.
 		Se o parâmetro "indice" for utilizado, será calculada a derivada daquele grau
@@ -162,10 +168,17 @@ class FisExp:
 			self._ultimo_simbolo = var
 		else:
 			self._gerar_simbolo(var)
+
 		if ponto_avaliado is None:
-			return self.__funcao.diff(self._ultimo_simbolo, indice)
+			if substituir:
+				return self.__funcao.diff(self._ultimo_simbolo, indice).subs(self.valores_conhecidos)
+			else:
+				return self.__funcao.diff(self._ultimo_simbolo, indice)
 		else:
-			return self.__funcao.diff(self._ultimo_simbolo, indice).subs(self._ultimo_simbolo, ponto_avaliado)
+			if substituir:
+				return self.__funcao.diff(self._ultimo_simbolo, indice).subs(self._ultimo_simbolo, ponto_avaliado).subs(self.valores_conhecidos)
+			else:
+				return self.__funcao.diff(self._ultimo_simbolo, indice).subs(self._ultimo_simbolo, ponto_avaliado)		
 
 	def _gerar_simbolo (self, var):
 		'''Para permitir a interação com os símbolos internos do programa, é gerado um símbolo
