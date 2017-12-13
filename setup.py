@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='aluno_exatas',
-    version='0.3',
+    version='0.5',
     packages=['aluno_exatas'],
     license='MIT License',
     long_description=open('README.md').read(),
