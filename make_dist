@@ -1,0 +1,5 @@
+jupyter nbconvert --to markdown 'Tutorial aluno_exatas.ipynb'
+mv 'Tutorial aluno_exatas.md' ./README.md
+
+python3 setup.py sdist bdist_wheel
+python3 -m twine upload dist/*
