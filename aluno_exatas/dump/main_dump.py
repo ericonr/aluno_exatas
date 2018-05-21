@@ -30,7 +30,7 @@ secante = lambda x, xo, g: [x-g(x)*(x-xo)/(g(x)-g(xo)), x]
 '''método da secante para uma função g qualquer, com aproximações iniciais x e xo
 retorna novo x: x,xo = secante(x, xo, g)'''
 
-newton = lambda x, f, flinha: x - f(x)/flinha(x)
+#newton = lambda x, f, flinha: x - f(x)/flinha(x)
 '''método de newton para uma função f qualquer, com derivada flinha e aproximação inicial x
 retorna novo x: x = newton(x, f, flinha)'''
         
