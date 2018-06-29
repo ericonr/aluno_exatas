@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='aluno_exatas',
-    version='0.8.3',
+    version='0.8.4',
     packages=['aluno_exatas'],
     install_requires = ['numpy', 'sympy'],
     license='MIT License',
