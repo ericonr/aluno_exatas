@@ -5,4 +5,4 @@ Esse é um módulo que tem como objetivo auxiliar alunos de exatas com os trabal
 * Cálculo numérico: esse módulo não tem muitas funções, mas busca implementar conceitos explorados na matéria. Não está completo, e só recomendo usar as funções depois de ter entendido bem o que elas fazem e como fazem;
 * Circuitos elétricos: esse módulo por enquanto só auxilia no tratamento de fasores e contém algumas constantes relacionadas a componentes simétricas.
 
-O tutorial para o módulo pode ser encontrado no formato Jupyter Notebook [aqui](tutorial_aluno_exatas.ipynb) e no formato Markdown [aqui](tutorial_aluno_exatas.md).
+O tutorial para o módulo pode ser encontrado no formato [Jupyter Notebook](https://github.com/ericonr/aluno_exatas/blob/master/tutorial_aluno_exatas.ipynb) e no formato [Markdown](https://github.com/ericonr/aluno_exatas/blob/master/tutorial_aluno_exatas.md).
