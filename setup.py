@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='aluno_exatas',
-    version='0.8.4',
-    packages=['aluno_exatas'],
+    version='0.8.5',
+    packages=find_packages(),
     install_requires=['numpy', 'sympy'],
     license='MIT License',
     description='Um pacote para auxiliar alunos de exatas.',
