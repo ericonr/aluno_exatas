@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 """Esse módulo contém funções que permitem trabalhar-se 
 facilmente com fasores, que normalmente são representados 
 na forma polar.

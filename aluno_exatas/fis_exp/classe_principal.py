@@ -195,7 +195,7 @@ class FisExp:
 		return ('FisExp(\'' + str(self) + '\', ' + str(self.__valores_conhecidos) + ', ' + str(self.__incertezas_conhecidas) + ')')
 
 
-if __name__ is "__main__":
+if __name__ == "__main__":
 	f = sp.sympify('x*a+b+c')
 	f_a = FisExp(f)
 	print ("Funcao: ", str(f_a))
