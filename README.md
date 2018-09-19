@@ -1,5 +1,9 @@
 # Aluno de exatas
 
+[![PyPI](https://img.shields.io/pypi/v/aluno_exatas.svg?style=for-the-badge)](https://pypi.org/project/aluno_exatas/)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/ericonr/aluno_exatas.svg?logo=lgtm&logoWidth=18&style=for-the-badge)](https://lgtm.com/projects/g/ericonr/aluno_exatas/alerts/)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/ericonr/aluno_exatas.svg?logo=lgtm&logoWidth=18&style=for-the-badge)](https://lgtm.com/projects/g/ericonr/aluno_exatas/context:python)
+
 O módulo pode ser instalado pelo pip `pip3 install aluno_exatas`.
 
 Esse é um módulo que tem como objetivo auxiliar alunos de exatas com os trabalhos do seu curso. Atualmente, contém funções para os seguintes assuntos:
