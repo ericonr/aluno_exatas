@@ -10,6 +10,9 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
    	url='https://github.com/ericonr/aluno_exatas',
+   	classifiers=[
+   	  'Programming Language :: Python :: 3'  
+   	],
     author='EricoNR',
     author_email='e170610@g.unicamp.br',
 )
